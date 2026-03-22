@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="utf-8"?>
+<root>
+  <resheader name="resmimetype"><value>text/microsoft-resx</value></resheader>
+  <resheader name="version"><value>2.0</value></resheader>
+  <resheader name="reader"><value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value></resheader>
+  <resheader name="writer"><value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value></resheader>
+
+  <data name="AppTitle" xml:space="preserve"><value>Сравнение папок и дубликаты</value></data>
+  <data name="ModeLabel" xml:space="preserve"><value>Режим работы</value></data>
+  <data name="CompareTwoFolders" xml:space="preserve"><value>Сравнить две папки</value></data>
+  <data name="FindDuplicates" xml:space="preserve"><value>Найти дубликаты в одной папке</value></data>
+  <data name="Folder1Label" xml:space="preserve"><value>Папка 1:</value></data>
+  <data name="Folder2Label" xml:space="preserve"><value>Папка 2:</value></data>
+  <data name="FolderLabel" xml:space="preserve"><value>Папка:</value></data>
+  <data name="Browse" xml:space="preserve"><value>Обзор</value></data>
+  <data name="Folder1Watermark" xml:space="preserve"><value>Путь к первой папке</value></data>
+  <data name="Folder2Watermark" xml:space="preserve"><value>Путь ко второй папке</value></data>
+  <data name="FolderWatermark" xml:space="preserve"><value>Путь к папке для поиска дубликатов</value></data>
+  <data name="ComparisonMethod" xml:space="preserve"><value>Метод сравнения</value></data>
+  <data name="ByHash" xml:space="preserve"><value>По хешу содержимого</value></data>
+  <data name="ByHashTip" xml:space="preserve"><value>Точное сравнение: файлы считаются одинаковыми только при совпадении содержимого</value></data>
+  <data name="ByName" xml:space="preserve"><value>Только по имени и расширению</value></data>
+  <data name="ByNameTip" xml:space="preserve"><value>Быстрая проверка: содержимое файлов не читается</value></data>
+  <data name="ExcludeFolders" xml:space="preserve"><value>Исключить папки</value></data>
+  <data name="ExcludeWatermark" xml:space="preserve"><value>Имя папки (например: .git, node_modules, bin, obj)</value></data>
+  <data name="Add" xml:space="preserve"><value>Добавить</value></data>
+  <data name="Run" xml:space="preserve"><value>Запустить</value></data>
+  <data name="SelectOldFiles" xml:space="preserve"><value>Выбрать старые файлы</value></data>
+  <data name="SelectOldFilesTip" xml:space="preserve"><value>В каждой группе дубликатов отмечает все файлы, кроме самого нового</value></data>
+  <data name="ClearSelection" xml:space="preserve"><value>Снять все галочки</value></data>
+  <data name="DeleteSelected" xml:space="preserve"><value>Удалить выбранные</value></data>
+  <data name="DeleteEmptyFolders" xml:space="preserve"><value>Удалять пустые папки</value></data>
+
+  <data name="Cancel" xml:space="preserve"><value>Отмена</value></data>
+  <data name="Cancelled" xml:space="preserve"><value>Отменено.</value></data>
+  <data name="Processing" xml:space="preserve"><value>Идёт обработка...</value></data>
+  <data name="FoldersIdentical" xml:space="preserve"><value>Папки идентичны.</value></data>
+  <data name="NoDuplicates" xml:space="preserve"><value>Дубликаты не найдены.</value></data>
+  <data name="FoundDiffsFormat" xml:space="preserve"><value>Найдено различий в {0} файлах</value></data>
+  <data name="FoundGroupsFormat" xml:space="preserve"><value>Найдено групп дубликатов: {0}</value></data>
+  <data name="ErrorPrefix" xml:space="preserve"><value>Ошибка: </value></data>
+  <data name="NoFilesSelected" xml:space="preserve"><value>Нет выбранных файлов для удаления.</value></data>
+  <data name="DeletingFilesFormat" xml:space="preserve"><value>Удаление {0} файлов...</value></data>
+  <data name="DeletedFilesFormat" xml:space="preserve"><value>Удалено файлов: {0}</value></data>
+  <data name="ErrorsFormat" xml:space="preserve"><value>Ошибок: {0}: {1}</value></data>
+  <data name="FolderNotExistsFormat" xml:space="preserve"><value>Папка не существует: {0}</value></data>
+
+  <data name="DiffersLabel" xml:space="preserve"><value>Отличающиеся файлы (содержимое)</value></data>
+  <data name="Missing2Label" xml:space="preserve"><value>Отсутствуют во второй папке</value></data>
+  <data name="Missing1Label" xml:space="preserve"><value>Отсутствуют в первой папке</value></data>
+  <data name="GroupHashFormat" xml:space="preserve"><value>Группа {0}  —  хэш: {1}…  ({2} файла)</value></data>
+  <data name="GroupNameFormat" xml:space="preserve"><value>Группа {0}  —  имя: {1}  ({2} файла)</value></data>
+</root>

@@ -1,0 +1,108 @@
+<Application xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             x:Class="FolderDiff.App"
+             RequestedThemeVariant="Dark">
+
+  <Application.Resources>
+    <ResourceDictionary>
+      <ResourceDictionary.ThemeDictionaries>
+
+        <ResourceDictionary x:Key="Dark">
+          <SolidColorBrush x:Key="CardBgBrush"         Color="#1C1C2E"/>
+          <SolidColorBrush x:Key="CardBorderBrush"      Color="#2E2E48"/>
+          <SolidColorBrush x:Key="AccentBrush"          Color="#4A90D9"/>
+          <SolidColorBrush x:Key="AccentHoverBrush"     Color="#5BA3EC"/>
+          <SolidColorBrush x:Key="AccentPressedBrush"   Color="#3A7EC8"/>
+          <SolidColorBrush x:Key="AccentSubtleBrush"    Color="#162440"/>
+          <SolidColorBrush x:Key="DangerBrush"          Color="#B84040"/>
+          <SolidColorBrush x:Key="DangerHoverBrush"     Color="#CC5050"/>
+          <SolidColorBrush x:Key="TagBgBrush"           Color="#1A2E50"/>
+          <SolidColorBrush x:Key="MutedTextBrush"       Color="#7878A0"/>
+          <SolidColorBrush x:Key="SeparatorBrush"       Color="#2E2E48"/>
+          <LinearGradientBrush x:Key="WindowBgBrush" StartPoint="0%,0%" EndPoint="100%,100%">
+            <GradientStop Color="#0D0D1F" Offset="0"/>
+            <GradientStop Color="#131326" Offset="0.5"/>
+            <GradientStop Color="#1A1535" Offset="1"/>
+          </LinearGradientBrush>
+        </ResourceDictionary>
+
+        <ResourceDictionary x:Key="Light">
+          <SolidColorBrush x:Key="CardBgBrush"         Color="#FFFFFF"/>
+          <SolidColorBrush x:Key="CardBorderBrush"      Color="#D4D4E8"/>
+          <SolidColorBrush x:Key="AccentBrush"          Color="#2E6EB8"/>
+          <SolidColorBrush x:Key="AccentHoverBrush"     Color="#2560A8"/>
+          <SolidColorBrush x:Key="AccentPressedBrush"   Color="#1C5098"/>
+          <SolidColorBrush x:Key="AccentSubtleBrush"    Color="#DDEEFF"/>
+          <SolidColorBrush x:Key="DangerBrush"          Color="#C03030"/>
+          <SolidColorBrush x:Key="DangerHoverBrush"     Color="#B02020"/>
+          <SolidColorBrush x:Key="TagBgBrush"           Color="#D8E8FF"/>
+          <SolidColorBrush x:Key="MutedTextBrush"       Color="#606080"/>
+          <SolidColorBrush x:Key="SeparatorBrush"       Color="#D4D4E8"/>
+          <LinearGradientBrush x:Key="WindowBgBrush" StartPoint="0%,0%" EndPoint="100%,100%">
+            <GradientStop Color="#F0F3FF" Offset="0"/>
+            <GradientStop Color="#F7F8FF" Offset="0.5"/>
+            <GradientStop Color="#EAF0FA" Offset="1"/>
+          </LinearGradientBrush>
+        </ResourceDictionary>
+
+      </ResourceDictionary.ThemeDictionaries>
+    </ResourceDictionary>
+  </Application.Resources>
+
+  <Application.Styles>
+    <FluentTheme />
+
+    <Style Selector="Window">
+      <Setter Property="Background" Value="{DynamicResource WindowBgBrush}"/>
+    </Style>
+
+    <Style Selector="Border.card">
+      <Setter Property="Background"       Value="{DynamicResource CardBgBrush}"/>
+      <Setter Property="BorderBrush"      Value="{DynamicResource CardBorderBrush}"/>
+      <Setter Property="BorderThickness"  Value="1"/>
+      <Setter Property="CornerRadius"     Value="8"/>
+      <Setter Property="Padding"          Value="14,12"/>
+    </Style>
+
+    <Style Selector="Button.primary">
+      <Setter Property="Background"   Value="{DynamicResource AccentBrush}"/>
+      <Setter Property="Foreground"   Value="White"/>
+      <Setter Property="FontWeight"   Value="SemiBold"/>
+      <Setter Property="Padding"      Value="20,8"/>
+      <Setter Property="CornerRadius" Value="6"/>
+    </Style>
+    <Style Selector="Button.primary:pointerover /template/ ContentPresenter#PART_ContentPresenter">
+      <Setter Property="Background" Value="{DynamicResource AccentHoverBrush}"/>
+    </Style>
+    <Style Selector="Button.primary:pressed /template/ ContentPresenter#PART_ContentPresenter">
+      <Setter Property="Background" Value="{DynamicResource AccentPressedBrush}"/>
+    </Style>
+
+    <Style Selector="Button.danger">
+      <Setter Property="Background"   Value="{DynamicResource DangerBrush}"/>
+      <Setter Property="Foreground"   Value="White"/>
+      <Setter Property="CornerRadius" Value="6"/>
+    </Style>
+    <Style Selector="Button.danger:pointerover /template/ ContentPresenter#PART_ContentPresenter">
+      <Setter Property="Background" Value="{DynamicResource DangerHoverBrush}"/>
+    </Style>
+
+    <Style Selector="Border.group-header">
+      <Setter Property="Background"    Value="{DynamicResource AccentSubtleBrush}"/>
+      <Setter Property="BorderBrush"   Value="{DynamicResource AccentBrush}"/>
+      <Setter Property="BorderThickness" Value="3,0,0,0"/>
+      <Setter Property="CornerRadius"  Value="0,4,4,0"/>
+      <Setter Property="Padding"       Value="10,5"/>
+      <Setter Property="Margin"        Value="0,0,0,2"/>
+    </Style>
+
+    <Style Selector="Border.tag">
+      <Setter Property="Background"   Value="{DynamicResource TagBgBrush}"/>
+      <Setter Property="CornerRadius" Value="12"/>
+      <Setter Property="Padding"      Value="8,3"/>
+      <Setter Property="Margin"       Value="0,2,4,2"/>
+    </Style>
+
+  </Application.Styles>
+
+</Application>

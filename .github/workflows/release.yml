@@ -1,0 +1,72 @@
+name: Release
+
+on:
+  push:
+    tags:
+      - "v*"
+
+jobs:
+  build:
+    strategy:
+      matrix:
+        include:
+          - os: windows-latest
+            rid: win-x64
+            artifact: FolderDiff-win-x64.zip
+          - os: ubuntu-latest
+            rid: linux-x64
+            artifact: FolderDiff-linux-x64.tar.gz
+          - os: macos-latest
+            rid: osx-x64
+            artifact: FolderDiff-osx-x64.tar.gz
+
+    runs-on: ${{ matrix.os }}
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-dotnet@v4
+        with:
+          dotnet-version: "10.0.x"
+
+      - run: dotnet test FolderDiff.Tests/FolderDiff.Tests.csproj --configuration Release
+
+      - run: >
+          dotnet publish FolderDiff.Desktop/FolderDiff.Desktop.csproj
+          --configuration Release
+          --runtime ${{ matrix.rid }}
+          --self-contained true
+          -p:PublishSingleFile=true
+          -p:DebugType=none
+          --output ./publish
+
+      - name: Pack (Windows)
+        if: matrix.os == 'windows-latest'
+        run: Compress-Archive -Path ./publish/* -DestinationPath ${{ matrix.artifact }}
+        shell: pwsh
+
+      - name: Pack (Linux / macOS)
+        if: matrix.os != 'windows-latest'
+        run: tar -czf ${{ matrix.artifact }} -C ./publish .
+
+      - uses: actions/upload-artifact@v4
+        with:
+          name: ${{ matrix.artifact }}
+          path: ${{ matrix.artifact }}
+
+  release:
+    needs: build
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+
+    steps:
+      - uses: actions/download-artifact@v4
+        with:
+          path: artifacts
+          merge-multiple: true
+
+      - uses: softprops/action-gh-release@v2
+        with:
+          files: artifacts/*
+          generate_release_notes: true

@@ -1,0 +1,217 @@
+<UserControl xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:vm="clr-namespace:FolderDiff.ViewModels"
+             mc:Ignorable="d" d:DesignWidth="900" d:DesignHeight="650"
+             x:Class="FolderDiff.Views.MainView"
+             x:DataType="vm:MainViewModel"
+             x:Name="Root">
+  <Design.DataContext>
+    <vm:MainViewModel />
+  </Design.DataContext>
+
+  <Grid RowDefinitions="Auto,Auto,Auto,*,Auto" Margin="16,16,16,0">
+
+    <StackPanel Grid.Row="0" Spacing="10">
+
+      <StackPanel Orientation="Horizontal" HorizontalAlignment="Right" Spacing="6">
+        <ToggleButton Content="{Binding Theme.Label}" Padding="10,3"
+                      IsChecked="{Binding Theme.IsDark, Mode=OneWay}"
+                      Command="{Binding ToggleThemeCommand}"
+                      FontSize="14"/>
+        <ToggleButton Content="{Binding Loc.CurrentLangLabel}" Padding="10,3"
+                      IsChecked="{Binding Loc.IsEnglish, Mode=OneWay}"
+                      Command="{Binding ToggleLanguageCommand}"/>
+      </StackPanel>
+
+      <Border Classes="card">
+        <StackPanel Spacing="6">
+          <TextBlock Text="{Binding Loc.ModeLabel}" FontWeight="SemiBold" Margin="0,0,0,4"/>
+          <StackPanel Orientation="Horizontal" Spacing="24">
+            <RadioButton GroupName="Mode"
+                         Content="{Binding Loc.CompareTwoFolders}"
+                         IsChecked="{Binding IsCompareMode}" />
+            <RadioButton GroupName="Mode"
+                         Content="{Binding Loc.FindDuplicates}"
+                         IsChecked="{Binding IsDuplicatesMode}" />
+          </StackPanel>
+        </StackPanel>
+      </Border>
+
+      <Border IsVisible="{Binding IsCompareMode}" Classes="card">
+        <Grid RowDefinitions="Auto,8,Auto" ColumnDefinitions="70,*,Auto">
+          <TextBlock Grid.Row="0" Grid.Column="0" Text="{Binding Loc.Folder1Label}" VerticalAlignment="Center"/>
+          <TextBox   Grid.Row="0" Grid.Column="1" Text="{Binding Folder1}"
+                     Watermark="{Binding Loc.Folder1Watermark}"/>
+          <Button    Grid.Row="0" Grid.Column="2" Content="{Binding Loc.Browse}" Margin="8,0,0,0"
+                     Command="{Binding BrowseFolder1Command}"/>
+
+          <TextBlock Grid.Row="2" Grid.Column="0" Text="{Binding Loc.Folder2Label}" VerticalAlignment="Center"/>
+          <TextBox   Grid.Row="2" Grid.Column="1" Text="{Binding Folder2}"
+                     Watermark="{Binding Loc.Folder2Watermark}"/>
+          <Button    Grid.Row="2" Grid.Column="2" Content="{Binding Loc.Browse}" Margin="8,0,0,0"
+                     Command="{Binding BrowseFolder2Command}"/>
+        </Grid>
+      </Border>
+
+      <Border IsVisible="{Binding IsDuplicatesMode}" Classes="card">
+        <Grid ColumnDefinitions="70,*,Auto">
+          <TextBlock Grid.Column="0" Text="{Binding Loc.FolderLabel}" VerticalAlignment="Center"/>
+          <TextBox   Grid.Column="1" Text="{Binding SingleFolder}"
+                     Watermark="{Binding Loc.FolderWatermark}"/>
+          <Button    Grid.Column="2" Content="{Binding Loc.Browse}" Margin="8,0,0,0"
+                     Command="{Binding BrowseSingleFolderCommand}"/>
+        </Grid>
+      </Border>
+
+      <Border Classes="card">
+        <StackPanel Spacing="6">
+          <TextBlock Text="{Binding Loc.ComparisonMethod}" FontWeight="SemiBold" Margin="0,0,0,4"/>
+          <StackPanel Orientation="Horizontal" Spacing="24">
+            <RadioButton GroupName="CompareMethod"
+                         Content="{Binding Loc.ByHash}"
+                         IsChecked="{Binding UseHashComparison}"
+                         ToolTip.Tip="{Binding Loc.ByHashTip}"/>
+            <RadioButton GroupName="CompareMethod"
+                         Content="{Binding Loc.ByName}"
+                         IsChecked="{Binding UseNameComparison}"
+                         ToolTip.Tip="{Binding Loc.ByNameTip}"/>
+          </StackPanel>
+        </StackPanel>
+      </Border>
+
+      <Border Classes="card">
+        <StackPanel Spacing="6">
+          <TextBlock Text="{Binding Loc.ExcludeFolders}" FontWeight="SemiBold" Margin="0,0,0,2"/>
+          <Grid ColumnDefinitions="*,Auto">
+            <TextBox Grid.Column="0"
+                     Text="{Binding NewExcludePattern}"
+                     Watermark="{Binding Loc.ExcludeWatermark}">
+              <TextBox.KeyBindings>
+                <KeyBinding Gesture="Enter" Command="{Binding AddExcludeCommand}"/>
+              </TextBox.KeyBindings>
+            </TextBox>
+            <Button Grid.Column="1" Content="{Binding Loc.Add}" Margin="8,0,0,0"
+                    Command="{Binding AddExcludeCommand}"/>
+          </Grid>
+          <ItemsControl ItemsSource="{Binding ExcludedFolders}">
+            <ItemsControl.ItemsPanel>
+              <ItemsPanelTemplate>
+                <WrapPanel Orientation="Horizontal"/>
+              </ItemsPanelTemplate>
+            </ItemsControl.ItemsPanel>
+            <ItemsControl.ItemTemplate>
+              <DataTemplate x:CompileBindings="False">
+                <Border Classes="tag">
+                  <StackPanel Orientation="Horizontal" Spacing="4">
+                    <TextBlock Text="{Binding}" VerticalAlignment="Center" FontSize="12"/>
+                    <Button Content="✕"
+                            Command="{Binding DataContext.RemoveExcludeCommand, ElementName=Root}"
+                            CommandParameter="{Binding}"
+                            Padding="4,1"
+                            MinWidth="0"
+                            FontSize="11"/>
+                  </StackPanel>
+                </Border>
+              </DataTemplate>
+            </ItemsControl.ItemTemplate>
+          </ItemsControl>
+        </StackPanel>
+      </Border>
+
+      <StackPanel Orientation="Horizontal" Spacing="10" VerticalAlignment="Center" Margin="0,4,0,0">
+        <Button Classes="primary"
+                Content="{Binding Loc.Run}"
+                Command="{Binding RunCommand}"
+                IsEnabled="{Binding !IsRunning}"/>
+        <Button Content="{Binding Loc.Cancel}"
+                Command="{Binding CancelRunCommand}"
+                IsVisible="{Binding IsRunning}"/>
+        <TextBlock Text="{Binding StatusMessage}"
+                   VerticalAlignment="Center"
+                   Foreground="{DynamicResource MutedTextBrush}"/>
+      </StackPanel>
+
+    </StackPanel>
+
+    <Border Grid.Row="1" IsVisible="{Binding HasResults}"
+            Background="{DynamicResource SeparatorBrush}"
+            Height="1" Margin="0,12,0,0"/>
+
+    <StackPanel Grid.Row="2" IsVisible="{Binding HasResults}"
+                Orientation="Horizontal" Spacing="8" Margin="0,8,0,4">
+      <Button Content="{Binding Loc.SelectOldFiles}"
+              IsVisible="{Binding IsDuplicatesMode}"
+              Command="{Binding SelectOldFilesCommand}"
+              ToolTip.Tip="{Binding Loc.SelectOldFilesTip}"/>
+      <Button Content="{Binding Loc.ClearSelection}"
+              Command="{Binding ClearSelectionCommand}"/>
+      <Button Classes="danger"
+              Content="{Binding Loc.DeleteSelected}"
+              Command="{Binding DeleteSelectedCommand}"
+              IsEnabled="{Binding !IsRunning}"/>
+      <CheckBox Content="{Binding Loc.DeleteEmptyFolders}"
+                IsChecked="{Binding DeleteEmptyFolders}"
+                VerticalAlignment="Center"/>
+    </StackPanel>
+
+    <ScrollViewer Grid.Row="3" IsVisible="{Binding HasResults}"
+                  VerticalScrollBarVisibility="Auto"
+                  HorizontalScrollBarVisibility="Disabled">
+      <ItemsControl ItemsSource="{Binding ResultGroups}" Margin="0,0,0,16">
+        <ItemsControl.ItemTemplate>
+          <DataTemplate x:DataType="vm:ResultGroup">
+            <StackPanel Margin="0,8,0,4">
+              <Border Classes="group-header">
+                <TextBlock Text="{Binding Label}"
+                           FontWeight="SemiBold" FontSize="13"/>
+              </Border>
+              <ItemsControl ItemsSource="{Binding Items}">
+                <ItemsControl.ItemTemplate>
+                  <DataTemplate x:DataType="vm:FileResultItem">
+                    <Grid ColumnDefinitions="Auto,Auto,*,Auto" Margin="8,2,4,2">
+                      <CheckBox Grid.Column="0"
+                                IsChecked="{Binding IsSelected}"
+                                VerticalAlignment="Center"/>
+                      <TextBlock Grid.Column="1"
+                                 Text="{Binding FileName}"
+                                 FontWeight="SemiBold"
+                                 VerticalAlignment="Center"
+                                 Margin="6,0,0,0"
+                                 MinWidth="160"/>
+                      <TextBlock Grid.Column="2"
+                                 Text="{Binding FilePath}"
+                                 VerticalAlignment="Center"
+                                 TextTrimming="CharacterEllipsis"
+                                 Foreground="{DynamicResource MutedTextBrush}"
+                                 FontSize="12"
+                                 Margin="8,0"
+                                 ToolTip.Tip="{Binding FilePath}"/>
+                      <TextBlock Grid.Column="3"
+                                 Text="{Binding ModifiedText}"
+                                 VerticalAlignment="Center"
+                                 FontSize="12"
+                                 Foreground="{DynamicResource MutedTextBrush}"
+                                 MinWidth="120"
+                                 TextAlignment="Right"/>
+                    </Grid>
+                  </DataTemplate>
+                </ItemsControl.ItemTemplate>
+              </ItemsControl>
+            </StackPanel>
+          </DataTemplate>
+        </ItemsControl.ItemTemplate>
+      </ItemsControl>
+    </ScrollViewer>
+
+    <ProgressBar Grid.Row="4"
+                 Minimum="0" Maximum="100"
+                 Value="{Binding Progress}"
+                 IsVisible="{Binding IsRunning}"
+                 Foreground="{DynamicResource AccentBrush}"
+                 Height="3"
+                 Margin="0,8,0,0"/>
+
+  </Grid>
+</UserControl>

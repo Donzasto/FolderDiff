@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="utf-8"?>
+<root>
+  <resheader name="resmimetype"><value>text/microsoft-resx</value></resheader>
+  <resheader name="version"><value>2.0</value></resheader>
+  <resheader name="reader"><value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value></resheader>
+  <resheader name="writer"><value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value></resheader>
+
+  <data name="AppTitle" xml:space="preserve"><value>Folder Diff &amp; Duplicate Finder</value></data>
+  <data name="ModeLabel" xml:space="preserve"><value>Mode</value></data>
+  <data name="CompareTwoFolders" xml:space="preserve"><value>Compare two folders</value></data>
+  <data name="FindDuplicates" xml:space="preserve"><value>Find duplicates in one folder</value></data>
+  <data name="Folder1Label" xml:space="preserve"><value>Folder 1:</value></data>
+  <data name="Folder2Label" xml:space="preserve"><value>Folder 2:</value></data>
+  <data name="FolderLabel" xml:space="preserve"><value>Folder:</value></data>
+  <data name="Browse" xml:space="preserve"><value>Browse</value></data>
+  <data name="Folder1Watermark" xml:space="preserve"><value>Path to first folder</value></data>
+  <data name="Folder2Watermark" xml:space="preserve"><value>Path to second folder</value></data>
+  <data name="FolderWatermark" xml:space="preserve"><value>Path to folder for duplicate search</value></data>
+  <data name="ComparisonMethod" xml:space="preserve"><value>Comparison method</value></data>
+  <data name="ByHash" xml:space="preserve"><value>By content hash (MD5)</value></data>
+  <data name="ByHashTip" xml:space="preserve"><value>Exact comparison: files are considered identical only when content matches</value></data>
+  <data name="ByName" xml:space="preserve"><value>By name and extension only</value></data>
+  <data name="ByNameTip" xml:space="preserve"><value>Fast check: file contents are not read</value></data>
+  <data name="ExcludeFolders" xml:space="preserve"><value>Exclude folders</value></data>
+  <data name="ExcludeWatermark" xml:space="preserve"><value>Folder name (e.g.: .git, node_modules, bin, obj)</value></data>
+  <data name="Add" xml:space="preserve"><value>Add</value></data>
+  <data name="Run" xml:space="preserve"><value>Run</value></data>
+  <data name="SelectOldFiles" xml:space="preserve"><value>Select old files</value></data>
+  <data name="SelectOldFilesTip" xml:space="preserve"><value>In each duplicate group, marks all files except the newest</value></data>
+  <data name="ClearSelection" xml:space="preserve"><value>Clear selection</value></data>
+  <data name="DeleteSelected" xml:space="preserve"><value>Delete selected</value></data>
+  <data name="DeleteEmptyFolders" xml:space="preserve"><value>Delete empty folders</value></data>
+
+  <data name="Processing" xml:space="preserve"><value>Processing...</value></data>
+  <data name="FoldersIdentical" xml:space="preserve"><value>Folders are identical.</value></data>
+  <data name="NoDuplicates" xml:space="preserve"><value>No duplicates found.</value></data>
+  <data name="FoundDiffsFormat" xml:space="preserve"><value>Found differences in {0} files</value></data>
+  <data name="FoundGroupsFormat" xml:space="preserve"><value>Found {0} duplicate groups</value></data>
+  <data name="Cancel" xml:space="preserve"><value>Cancel</value></data>
+  <data name="Cancelled" xml:space="preserve"><value>Cancelled.</value></data>
+  <data name="ErrorPrefix" xml:space="preserve"><value>Error: </value></data>
+  <data name="NoFilesSelected" xml:space="preserve"><value>No files selected for deletion.</value></data>
+  <data name="DeletingFilesFormat" xml:space="preserve"><value>Deleting {0} files...</value></data>
+  <data name="DeletedFilesFormat" xml:space="preserve"><value>Deleted files: {0}</value></data>
+  <data name="ErrorsFormat" xml:space="preserve"><value>Errors: {0}: {1}</value></data>
+  <data name="FolderNotExistsFormat" xml:space="preserve"><value>Folder does not exist: {0}</value></data>
+
+  <data name="DiffersLabel" xml:space="preserve"><value>Differing files (content)</value></data>
+  <data name="Missing2Label" xml:space="preserve"><value>Missing in second folder</value></data>
+  <data name="Missing1Label" xml:space="preserve"><value>Missing in first folder</value></data>
+  <data name="GroupHashFormat" xml:space="preserve"><value>Group {0}  —  hash: {1}…  ({2} files)</value></data>
+  <data name="GroupNameFormat" xml:space="preserve"><value>Group {0}  —  name: {1}  ({2} files)</value></data>
+</root>
