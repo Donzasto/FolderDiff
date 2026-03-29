@@ -321,6 +321,11 @@ public partial class MainViewModel : ObservableObject
                 {
                     try
                     {
+                        var attrs = File.GetAttributes(item.FilePath);
+                        if ((attrs & FileAttributes.ReadOnly) != 0)
+                        {
+                            File.SetAttributes(item.FilePath, attrs & ~FileAttributes.ReadOnly);
+                        }
                         File.Delete(item.FilePath);
                         deleted.Add(item);
                         if (deleteEmpty)
