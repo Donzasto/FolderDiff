@@ -120,18 +120,39 @@
         </StackPanel>
       </Border>
 
-      <StackPanel Orientation="Horizontal" Spacing="10" VerticalAlignment="Center" Margin="0,4,0,0">
-        <Button Classes="primary"
+      <DockPanel Margin="0,4,0,0" LastChildFill="True">
+        <Button DockPanel.Dock="Left" Classes="primary"
                 Content="{Binding Loc.Run}"
                 Command="{Binding RunCommand}"
-                IsEnabled="{Binding !IsRunning}"/>
-        <Button Content="{Binding Loc.Cancel}"
+                IsEnabled="{Binding !IsRunning}"
+                Margin="0,0,10,0"/>
+        <Button DockPanel.Dock="Left" Content="{Binding Loc.Cancel}"
                 Command="{Binding CancelRunCommand}"
-                IsVisible="{Binding IsRunning}"/>
+                IsVisible="{Binding IsRunning}"
+                Margin="0,0,10,0"/>
         <TextBlock Text="{Binding StatusMessage}"
                    VerticalAlignment="Center"
-                   Foreground="{DynamicResource MutedTextBrush}"/>
-      </StackPanel>
+                   Foreground="{DynamicResource MutedTextBrush}"
+                   TextTrimming="CharacterEllipsis"
+                   ToolTip.Tip="{Binding StatusMessage}"/>
+      </DockPanel>
+
+      <Border IsVisible="{Binding HasDeleteErrors}" Classes="card" Margin="0,4,0,0">
+        <ScrollViewer MaxHeight="120" VerticalScrollBarVisibility="Auto">
+          <ItemsControl ItemsSource="{Binding DeleteErrors}">
+            <ItemsControl.ItemTemplate>
+              <DataTemplate>
+                <SelectableTextBlock Text="{Binding}"
+                                     FontSize="12"
+                                     FontFamily="Consolas,Menlo,monospace"
+                                     Foreground="{DynamicResource DangerBrush}"
+                                     TextWrapping="Wrap"
+                                     Margin="0,1"/>
+              </DataTemplate>
+            </ItemsControl.ItemTemplate>
+          </ItemsControl>
+        </ScrollViewer>
+      </Border>
 
     </StackPanel>
 

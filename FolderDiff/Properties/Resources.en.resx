@@ -42,7 +42,7 @@
   <data name="NoFilesSelected" xml:space="preserve"><value>No files selected for deletion.</value></data>
   <data name="DeletingFilesFormat" xml:space="preserve"><value>Deleting {0} files...</value></data>
   <data name="DeletedFilesFormat" xml:space="preserve"><value>Deleted files: {0}</value></data>
-  <data name="ErrorsFormat" xml:space="preserve"><value>Errors: {0}: {1}</value></data>
+  <data name="ErrorsFormat" xml:space="preserve"><value>Errors: {0}</value></data>
   <data name="FolderNotExistsFormat" xml:space="preserve"><value>Folder does not exist: {0}</value></data>
 
   <data name="DiffersLabel" xml:space="preserve"><value>Differing files (content)</value></data>

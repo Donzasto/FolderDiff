@@ -69,6 +69,10 @@ public partial class MainViewModel : ObservableObject
 
     public ObservableCollection<ResultGroup> ResultGroups { get; } = new();
     public ObservableCollection<string> ExcludedFolders { get; } = [];
+    public ObservableCollection<string> DeleteErrors { get; } = new();
+
+    [ObservableProperty]
+    private bool _hasDeleteErrors = false;
 
     partial void OnIsCompareModeChanged(bool value)
     {
@@ -302,6 +306,8 @@ public partial class MainViewModel : ObservableObject
 
         IsRunning = true;
         StatusMessage = string.Format(loc.DeletingFilesFormat, toDelete.Count);
+        DeleteErrors.Clear();
+        HasDeleteErrors = false;
 
         var deleted     = new HashSet<FileResultItem>();
         var errors      = new List<string>();
@@ -347,7 +353,12 @@ public partial class MainViewModel : ObservableObject
             var status = string.Format(loc.DeletedFilesFormat, deleted.Count);
             if (errors.Count > 0)
             {
-                status += $"  |  " + string.Format(loc.ErrorsFormat, errors.Count, string.Join("; ", errors.Take(3)));
+                status += $"  |  " + string.Format(loc.ErrorsFormat, errors.Count);
+                foreach (var e in errors)
+                {
+                    DeleteErrors.Add(e);
+                }
+                HasDeleteErrors = true;
             }
             StatusMessage = status;
         }

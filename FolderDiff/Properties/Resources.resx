@@ -42,7 +42,7 @@
   <data name="NoFilesSelected" xml:space="preserve"><value>Нет выбранных файлов для удаления.</value></data>
   <data name="DeletingFilesFormat" xml:space="preserve"><value>Удаление {0} файлов...</value></data>
   <data name="DeletedFilesFormat" xml:space="preserve"><value>Удалено файлов: {0}</value></data>
-  <data name="ErrorsFormat" xml:space="preserve"><value>Ошибок: {0}: {1}</value></data>
+  <data name="ErrorsFormat" xml:space="preserve"><value>Ошибок: {0}</value></data>
   <data name="FolderNotExistsFormat" xml:space="preserve"><value>Папка не существует: {0}</value></data>
 
   <data name="DiffersLabel" xml:space="preserve"><value>Отличающиеся файлы (содержимое)</value></data>
