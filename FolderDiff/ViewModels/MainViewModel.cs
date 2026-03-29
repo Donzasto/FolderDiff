@@ -11,68 +11,138 @@ using CommunityToolkit.Mvvm.Input;
 
 namespace FolderDiff.ViewModels;
 
+/// <summary>
+/// Main view model — orchestrates folder comparison, duplicate search, and file deletion.
+/// </summary>
 public partial class MainViewModel : ObservableObject
 {
     private readonly IFolderPickerService? _folderPicker;
     private CancellationTokenSource? _cts;
 
+    /// <summary>
+    /// Initializes a design-time instance with no services.
+    /// </summary>
     public MainViewModel()
     {
     }
 
+    /// <summary>
+    /// Initializes a runtime instance with the given folder picker service.
+    /// </summary>
+    /// <param name="folderPicker">Platform-specific folder picker implementation.</param>
     public MainViewModel(IFolderPickerService folderPicker)
     {
         _folderPicker = folderPicker;
     }
 
+    /// <summary>
+    /// Gets the localization provider.
+    /// </summary>
     public Localization Loc => Localization.Instance;
+
+    /// <summary>
+    /// Gets the theme service.
+    /// </summary>
     public ThemeService Theme => ThemeService.Instance;
 
+    /// <summary>
+    /// Gets or sets whether the two-folder comparison mode is active.
+    /// </summary>
     [ObservableProperty]
     private bool _isCompareMode = true;
 
+    /// <summary>
+    /// Gets or sets whether the find-duplicates mode is active.
+    /// </summary>
     [ObservableProperty]
     private bool _isDuplicatesMode = false;
 
+    /// <summary>
+    /// Gets or sets the path to the first folder (compare mode).
+    /// </summary>
     [ObservableProperty]
     private string _folder1 = string.Empty;
 
+    /// <summary>
+    /// Gets or sets the path to the second folder (compare mode).
+    /// </summary>
     [ObservableProperty]
     private string _folder2 = string.Empty;
 
+    /// <summary>
+    /// Gets or sets the path to the folder to scan for duplicates.
+    /// </summary>
     [ObservableProperty]
     private string _singleFolder = string.Empty;
 
+    /// <summary>
+    /// Gets or sets whether an operation is currently running.
+    /// </summary>
     [ObservableProperty]
     private bool _isRunning = false;
 
+    /// <summary>
+    /// Gets or sets the current operation progress (0–100).
+    /// </summary>
     [ObservableProperty]
     private double _progress = 0;
 
+    /// <summary>
+    /// Gets or sets whether there are any results to display.
+    /// </summary>
     [ObservableProperty]
     private bool _hasResults = false;
 
+    /// <summary>
+    /// Gets or sets the status bar message.
+    /// </summary>
     [ObservableProperty]
     private string _statusMessage = string.Empty;
 
+    /// <summary>
+    /// Gets or sets whether files are compared by MD5 hash.
+    /// </summary>
     [ObservableProperty]
     private bool _useHashComparison = true;
 
+    /// <summary>
+    /// Gets or sets whether files are compared by name only.
+    /// </summary>
     [ObservableProperty]
     private bool _useNameComparison = false;
 
+    /// <summary>
+    /// Gets or sets whether empty directories are removed after file deletion.
+    /// </summary>
     [ObservableProperty]
     private bool _deleteEmptyFolders = true;
 
+    /// <summary>
+    /// Gets or sets the folder name pattern being typed into the exclude input.
+    /// </summary>
     [ObservableProperty]
     private string _newExcludePattern = string.Empty;
 
-    public ObservableCollection<ResultGroup> ResultGroups { get; } = new();
-    public ObservableCollection<string> ExcludedFolders { get; } = [];
-    public ObservableCollection<string> DeleteErrors { get; } = new();
-
+    /// <summary>
+    /// Gets or sets whether the last delete operation produced errors.
+    /// </summary>
     [ObservableProperty]
     private bool _hasDeleteErrors = false;
+
+    /// <summary>
+    /// Grouped comparison or duplicate results shown in the results list.
+    /// </summary>
+    public ObservableCollection<ResultGroup> ResultGroups { get; } = new();
+
+    /// <summary>
+    /// Folder name patterns excluded from scanning.
+    /// </summary>
+    public ObservableCollection<string> ExcludedFolders { get; } = [];
+
+    /// <summary>
+    /// Per-file error messages from the last delete operation.
+    /// </summary>
+    public ObservableCollection<string> DeleteErrors { get; } = new();
 
     partial void OnIsCompareModeChanged(bool value)
     {
@@ -93,18 +163,34 @@ public partial class MainViewModel : ObservableObject
     partial void OnUseHashComparisonChanged(bool value) => UseNameComparison = !value;
     partial void OnUseNameComparisonChanged(bool value) => UseHashComparison = !value;
 
+    /// <summary>
+    /// Switches the UI language to <paramref name="lang"/>.
+    /// </summary>
+    /// <param name="lang">Language code: <c>"en"</c> or <c>"ru"</c>.</param>
     [RelayCommand]
     private void SetLanguage(string lang) => Localization.Instance.SetLanguage(lang);
 
+    /// <summary>
+    /// Toggles the UI language between English and Russian.
+    /// </summary>
     [RelayCommand]
     private void ToggleLanguage() => Localization.Instance.ToggleLanguage();
 
+    /// <summary>
+    /// Toggles the application theme between light and dark.
+    /// </summary>
     [RelayCommand]
     private void ToggleTheme() => ThemeService.Instance.Toggle();
 
+    /// <summary>
+    /// Cancels the currently running operation.
+    /// </summary>
     [RelayCommand]
     private void CancelRun() => _cts?.Cancel();
 
+    /// <summary>
+    /// Adds <see cref="NewExcludePattern"/> to <see cref="ExcludedFolders"/> if non-empty and not already present.
+    /// </summary>
     [RelayCommand]
     public void AddExclude()
     {
@@ -121,9 +207,16 @@ public partial class MainViewModel : ObservableObject
         NewExcludePattern = string.Empty;
     }
 
+    /// <summary>
+    /// Removes the given pattern from <see cref="ExcludedFolders"/>.
+    /// </summary>
+    /// <param name="pattern">The pattern to remove.</param>
     [RelayCommand]
     private void RemoveExclude(string pattern) => ExcludedFolders.Remove(pattern);
 
+    /// <summary>
+    /// Opens a folder picker and sets <see cref="Folder1"/>.
+    /// </summary>
     [RelayCommand]
     private async Task BrowseFolder1()
     {
@@ -134,6 +227,9 @@ public partial class MainViewModel : ObservableObject
         }
     }
 
+    /// <summary>
+    /// Opens a folder picker and sets <see cref="Folder2"/>.
+    /// </summary>
     [RelayCommand]
     private async Task BrowseFolder2()
     {
@@ -144,6 +240,9 @@ public partial class MainViewModel : ObservableObject
         }
     }
 
+    /// <summary>
+    /// Opens a folder picker and sets <see cref="SingleFolder"/>.
+    /// </summary>
     [RelayCommand]
     private async Task BrowseSingleFolder()
     {
@@ -154,6 +253,9 @@ public partial class MainViewModel : ObservableObject
         }
     }
 
+    /// <summary>
+    /// Runs the comparison or duplicate search in the background and populates <see cref="ResultGroups"/>.
+    /// </summary>
     [RelayCommand]
     private async Task RunAsync()
     {
@@ -261,6 +363,9 @@ public partial class MainViewModel : ObservableObject
         }
     }
 
+    /// <summary>
+    /// Deselects all items in all result groups.
+    /// </summary>
     [RelayCommand]
     private void ClearSelection()
     {
@@ -270,6 +375,9 @@ public partial class MainViewModel : ObservableObject
         }
     }
 
+    /// <summary>
+    /// In each duplicate group, selects all files except the newest one.
+    /// </summary>
     [RelayCommand]
     private void SelectOldFiles()
     {
@@ -288,6 +396,9 @@ public partial class MainViewModel : ObservableObject
         }
     }
 
+    /// <summary>
+    /// Deletes all selected files, removes their entries from the UI, and reports per-file errors in <see cref="DeleteErrors"/>.
+    /// </summary>
     [RelayCommand]
     private async Task DeleteSelectedAsync()
     {
@@ -373,6 +484,20 @@ public partial class MainViewModel : ObservableObject
         }
     }
 
+    /// <summary>
+    /// Compares two folders and returns groups of differing and missing files.
+    /// </summary>
+    /// <param name="folder1">Path to the first folder.</param>
+    /// <param name="folder2">Path to the second folder.</param>
+    /// <param name="excluded">Folder names to skip during traversal.</param>
+    /// <param name="useHash">When <see langword="true"/>, compares by MD5 hash; otherwise by relative path.</param>
+    /// <param name="progress">Progress reporter (0–100).</param>
+    /// <param name="differsLabel">Label for the "differs" group.</param>
+    /// <param name="missing2Label">Label for the "missing in folder 2" group.</param>
+    /// <param name="missing1Label">Label for the "missing in folder 1" group.</param>
+    /// <param name="folderNotFmt">Format string for the folder-not-found error.</param>
+    /// <param name="ct">Cancellation token.</param>
+    /// <returns>List of result groups; empty groups are omitted.</returns>
     internal static List<ResultGroup> CompareFolders(
         string folder1, string folder2, List<string> excluded, bool useHash,
         IProgress<double> progress,
@@ -489,6 +614,18 @@ public partial class MainViewModel : ObservableObject
         return groups;
     }
 
+    /// <summary>
+    /// Scans a folder recursively and returns groups of files with identical content or name.
+    /// </summary>
+    /// <param name="rootPath">Root folder to scan.</param>
+    /// <param name="excluded">Folder names to skip during traversal.</param>
+    /// <param name="useHash">When <see langword="true"/>, groups by MD5 hash; otherwise by file name.</param>
+    /// <param name="progress">Progress reporter (0–100).</param>
+    /// <param name="groupHashFmt">Format string for hash-mode group labels.</param>
+    /// <param name="groupNameFmt">Format string for name-mode group labels.</param>
+    /// <param name="folderNotFmt">Format string for the folder-not-found error.</param>
+    /// <param name="ct">Cancellation token.</param>
+    /// <returns>List of groups containing two or more files with the same key.</returns>
     internal static List<ResultGroup> FindDuplicatesInFolder(
         string rootPath, List<string> excluded, bool useHash,
         IProgress<double> progress,
@@ -565,6 +702,13 @@ public partial class MainViewModel : ObservableObject
         Modified = File.Exists(path) ? File.GetLastWriteTime(path) : DateTime.MinValue
     };
 
+    /// <summary>
+    /// Returns the set of relative file paths under <paramref name="folderPath"/>, excluding specified sub-folders.
+    /// </summary>
+    /// <param name="folderPath">Root folder to scan.</param>
+    /// <param name="excluded">Folder names to skip.</param>
+    /// <param name="ct">Cancellation token.</param>
+    /// <returns>Case-insensitive set of relative paths.</returns>
     internal static HashSet<string> GetRelativePaths(string folderPath, List<string> excluded, CancellationToken ct = default)
     {
         var paths = new HashSet<string>(StringComparer.OrdinalIgnoreCase);
@@ -575,6 +719,14 @@ public partial class MainViewModel : ObservableObject
         return paths;
     }
 
+    /// <summary>
+    /// Enumerates all files under <paramref name="root"/> recursively,
+    /// skipping directories whose name matches any entry in <paramref name="excluded"/>.
+    /// </summary>
+    /// <param name="root">Root directory to traverse.</param>
+    /// <param name="excluded">Folder names to skip.</param>
+    /// <param name="ct">Cancellation token.</param>
+    /// <returns>Sequence of absolute file paths.</returns>
     internal static IEnumerable<string> GetFilesExcluding(string root, List<string> excluded, CancellationToken ct = default)
     {
         var dirs = new Stack<string>();
@@ -623,6 +775,12 @@ public partial class MainViewModel : ObservableObject
         }
     }
 
+    /// <summary>
+    /// Computes the MD5 hash of a file and returns it as a lowercase hex string.
+    /// </summary>
+    /// <param name="filePath">Path to the file.</param>
+    /// <param name="ct">Cancellation token checked between read chunks.</param>
+    /// <returns>Lowercase hex MD5 string, e.g. <c>"d41d8cd98f00b204e9800998ecf8427e"</c>.</returns>
     internal static string ComputeHash(string filePath, CancellationToken ct = default)
     {
         using var md5    = MD5.Create();
@@ -638,6 +796,10 @@ public partial class MainViewModel : ObservableObject
         return BitConverter.ToString(md5.Hash!).Replace("-", "").ToLowerInvariant();
     }
 
+    /// <summary>
+    /// Deletes <paramref name="dirPath"/> and each of its ancestors while they are empty.
+    /// </summary>
+    /// <param name="dirPath">Starting directory path; may be <see langword="null"/>.</param>
     internal static void DeleteEmptyDirectoriesUp(string? dirPath)
     {
         while (!string.IsNullOrEmpty(dirPath) && Directory.Exists(dirPath))

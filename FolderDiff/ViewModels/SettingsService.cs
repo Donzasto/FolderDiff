@@ -4,6 +4,9 @@ using System.Text.Json;
 
 namespace FolderDiff.ViewModels;
 
+/// <summary>
+/// Persists user preferences (language, theme) to a JSON file in <c>%AppData%\FolderDiff</c>.
+/// </summary>
 public static class SettingsService
 {
     private static readonly string SettingsPath = Path.Combine(
@@ -41,9 +44,27 @@ public static class SettingsService
         }
     }
 
+    /// <summary>
+    /// Returns the saved UI language code.
+    /// </summary>
+    /// <returns><c>"ru"</c> or <c>"en"</c>.</returns>
     public static string LoadLanguage() => Load().Language;
-    public static string LoadTheme()    => Load().Theme;
 
-    public static void SaveLanguage(string lang)  => Save(Load() with { Language = lang });
-    public static void SaveTheme(string theme)    => Save(Load() with { Theme = theme });
+    /// <summary>
+    /// Returns the saved theme name.
+    /// </summary>
+    /// <returns><c>"dark"</c> or <c>"light"</c>.</returns>
+    public static string LoadTheme() => Load().Theme;
+
+    /// <summary>
+    /// Saves the UI language code.
+    /// </summary>
+    /// <param name="lang">Language code to persist (<c>"ru"</c> or <c>"en"</c>).</param>
+    public static void SaveLanguage(string lang) => Save(Load() with { Language = lang });
+
+    /// <summary>
+    /// Saves the theme name.
+    /// </summary>
+    /// <param name="theme">Theme name to persist (<c>"dark"</c> or <c>"light"</c>).</param>
+    public static void SaveTheme(string theme) => Save(Load() with { Theme = theme });
 }
