@@ -1,4 +1,5 @@
 using System.Globalization;
+using System.Reflection;
 using System.Resources;
 
 namespace FolderDiff.ViewModels;
@@ -17,6 +18,9 @@ public class Localization : CommunityToolkit.Mvvm.ComponentModel.ObservableObjec
 
     private static readonly ResourceManager Rm =
         new("FolderDiff.Properties.Resources", typeof(Localization).Assembly);
+
+    private static readonly string AppVersion =
+        Assembly.GetEntryAssembly()?.GetName().Version?.ToString(3) ?? "??";
 
     private Localization()
     {
@@ -53,8 +57,8 @@ public class Localization : CommunityToolkit.Mvvm.ComponentModel.ObservableObjec
     /// </summary>
     public void ToggleLanguage() => SetLanguage(IsEnglish ? "ru" : "en");
 
-    /// <summary>Gets the application window title.</summary>
-    public string AppTitle           => GetString(nameof(AppTitle));
+    /// <summary>Gets the application window title with version number.</summary>
+    public string AppTitle           => $"{GetString(nameof(AppTitle))} v{AppVersion}";
     /// <summary>Gets the label for the mode selector section.</summary>
     public string ModeLabel          => GetString(nameof(ModeLabel));
     /// <summary>Gets the label for the "Compare two folders" mode option.</summary>
