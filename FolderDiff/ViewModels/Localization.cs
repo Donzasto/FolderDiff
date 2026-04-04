@@ -20,7 +20,7 @@ public class Localization : CommunityToolkit.Mvvm.ComponentModel.ObservableObjec
         new("FolderDiff.Properties.Resources", typeof(Localization).Assembly);
 
     private static readonly string AppVersion =
-        Assembly.GetEntryAssembly()?.GetName().Version?.ToString(3) ?? "??";
+        typeof(Localization).Assembly.GetName().Version?.ToString(3) ?? "??";
 
     private Localization()
     {
